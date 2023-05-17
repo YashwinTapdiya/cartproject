@@ -13,6 +13,7 @@ class App extends React.Component {
       products: [],
       loading: true
     }
+    this.db = firebase.firestore();
     // this.increaseQuantity = this.increaseQuantity.bind(this);
   }
   // componentDidMount() {
@@ -38,8 +39,9 @@ class App extends React.Component {
   //     });
   // }
   componentDidMount() {
-    firebase
-      .firestore()
+    // firebase
+    //   .firestore()
+    this.db
       .collection("products")
       .onSnapshot(snapshot => {
         const products = snapshot.docs.map(doc => {
@@ -101,12 +103,48 @@ class App extends React.Component {
     })
     return cartTotal;
   }
+  addProduct = () => {
+    this.db
+      .collection("products")
+      .add({
+        img: "https://cdn1.smartprix.com/rx-i6gTE5YIQ-w1200-h1200/6gTE5YIQ.jpg",
+        price: 900,
+        qty: 3,
+        title: "Washing Machine"
+      })
+      .then(docRef => {
+        docRef.get().then(snapshot => {
+          console.log("Product has been added", snapshot.data());
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render(){
     const {products ,loading} = this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()}/>
+      <button
+  onClick={this.addProduct}
+  style={{
+    padding: '10px 20px',
+    fontSize: '16px',
+    backgroundColor: '#f0f0f0',
+    color: '#333',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+    transition: 'background-color 0.3s ease',
+  }}
+>
+  Add a Product
+</button>
+
+
       <Cart
       products ={products}
       onIncreaseQuantity={this.handleIncreaseQuantity}
