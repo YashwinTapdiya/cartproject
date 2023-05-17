@@ -58,11 +58,22 @@ class App extends React.Component {
     const { products } = this.state;
     const index = products.indexOf(product);
 
-    products[index].qty += 1;
+    //products[index].qty += 1;
+    // this.setState({
+    //   products
+    // })
+    const docRef = this.db.collection("products").doc(products[index].id);
 
-    this.setState({
-      products
-    })
+    docRef
+      .update({ qty: products[index].qty + 1 })
+      .then(() => {
+        console.log("Document updated sucessfully");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    
   }
   handleDecreaseQuantity = (product) => {
     console.log('Please dec the qty of ' , product);
@@ -71,12 +82,22 @@ class App extends React.Component {
     if(products[index].qty ===0 ){
         return;
     }
-    
-    products[index].qty -=1;
+    const docRef = this.db.collection("products").doc(products[index].id);
 
-    this.setState({
-        products
-    })
+    docRef
+      .update({ qty: products[index].qty - 1 })
+      .then(() => {
+        console.log("Document updated sucessfully");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    
+    // products[index].qty -=1;
+
+    // this.setState({
+    //     products
+    // })
   }
 
   handleDeleteProduct = (id)=>{
