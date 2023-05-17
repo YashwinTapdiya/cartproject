@@ -15,28 +15,42 @@ class App extends React.Component {
     }
     // this.increaseQuantity = this.increaseQuantity.bind(this);
   }
+  // componentDidMount() {
+  //   firebase
+  //     .firestore()
+  //     .collection("products")
+  //     .get()
+  //     .then(snapshot => {
+  //      console.log(snapshot);
+  //      snapshot.docs.map((doc) =>{
+  //       return console.log(doc.data);
+  //      })
+
+  //      const products = snapshot.docs.map((doc)=>{
+  //       const data =doc.data();
+  //       data['id'] =doc.id;
+  //       return data;
+  //      })
+  //      this.setState({
+  //       products:products,
+  //       loading: false
+  //      })
+  //     });
+  // }
   componentDidMount() {
     firebase
       .firestore()
       .collection("products")
-      .get()
-      .then(snapshot => {
-       console.log(snapshot);
-       snapshot.docs.map((doc) =>{
-        return console.log(doc.data);
-       })
-
-       const products = snapshot.docs.map((doc)=>{
-        const data =doc.data();
-        data['id'] =doc.id;
-        return data;
-       })
-       this.setState({
-        products:products,
-        loading: false
-       })
+      .onSnapshot(snapshot => {
+        const products = snapshot.docs.map(doc => {
+          const data = doc.data();
+          data["id"] = doc.id;
+          return data;
+        });
+        this.setState({ products: products, loading: false });
       });
   }
+
   handleIncreaseQuantity = (product) => {
     console.log('Heyy please inc the qty of ', product);
     const { products } = this.state;
