@@ -69,7 +69,7 @@ class App extends React.Component {
   }
 
   handleIncreaseQuantity = (product) => {
-    console.log('Heyy please inc the qty of ', product);
+   // console.log('Heyy please inc the qty of ', product);
     const { products } = this.state;
     const index = products.indexOf(product);
 
@@ -82,7 +82,7 @@ class App extends React.Component {
     docRef
       .update({ qty: products[index].qty + 1 })
       .then(() => {
-        console.log("Document updated sucessfully");
+       // console.log("Document updated sucessfully");
       })
       .catch(error => {
         console.log(error);
@@ -91,7 +91,7 @@ class App extends React.Component {
     
   }
   handleDecreaseQuantity = (product) => {
-    console.log('Please dec the qty of ' , product);
+   // console.log('Please dec the qty of ' , product);
     const { products } =this.state;
     const index = products.indexOf(product);
     if(products[index].qty ===0 ){
@@ -102,7 +102,7 @@ class App extends React.Component {
     docRef
       .update({ qty: products[index].qty - 1 })
       .then(() => {
-        console.log("Document updated sucessfully");
+       // console.log("Document updated sucessfully");
       })
       .catch(error => {
         console.log(error);
@@ -126,7 +126,7 @@ class App extends React.Component {
     docRef
       .delete()
       .then(() => {
-        console.log("Deleted sucessfully");
+        //console.log("Deleted sucessfully");
       })
       .catch(err => {
         console.log(err);
