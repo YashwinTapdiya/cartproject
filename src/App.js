@@ -38,11 +38,26 @@ class App extends React.Component {
   //      })
   //     });
   // }
+  // componentDidMount() {
+  //   // firebase
+  //   //   .firestore()
+  //   this.db
+  //     .collection("products")
+  //     .onSnapshot(snapshot => {
+  //       const products = snapshot.docs.map(doc => {
+  //         const data = doc.data();
+  //         data["id"] = doc.id;
+  //         return data;
+  //       });
+  //       this.setState({ products: products, loading: false });
+  //     });
+  // }
   componentDidMount() {
-    // firebase
-    //   .firestore()
     this.db
       .collection("products")
+      // .where("price", "==", 999)
+      // .where("title", "==", "Mug")
+      .orderBy("price", "desc")
       .onSnapshot(snapshot => {
         const products = snapshot.docs.map(doc => {
           const data = doc.data();
